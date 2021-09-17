@@ -1,0 +1,4 @@
+<div *ngFor = "let task of tasks">
+    <span class="{{task.completed? 'lined': ''}}">{{task.description}}</span>
+    <button (click)="remove(task)">x</button>
+</div>

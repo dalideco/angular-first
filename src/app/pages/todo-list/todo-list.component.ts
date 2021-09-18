@@ -9,16 +9,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
+ 
 
-  tasks: Task[] = [] ; 
-  subscription : Subscription | null = null ; 
-
-  constructor(private taskService: TaskService) {
-    this.tasks = [...this.taskService.getTask()]
-    this.subscription = this.taskService.onChange().subscribe(value=>{
-      this.tasks = [...value]
-    })
-  }
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
     

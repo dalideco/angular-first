@@ -1,6 +1,7 @@
-import { Component, OnInit , Input, EventEmitter, Output} from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Task } from 'src/app/Task';
 import { TaskService } from 'src/app/services/task.service';
+import {  Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,16 +11,21 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class TodosComponent implements OnInit {
 
-  @Output() removeTask = new EventEmitter<Task>();
-  @Input() tasks: Task[]= [];
 
-  constructor(private taskService: TaskService) { }
+  tasks: Task[] = [];
+  subscription : Subscription |null = null ; 
+
+  constructor(private taskService: TaskService) { 
+    this.tasks = [...this.taskService.getTask()]
+    this.subscription = this.taskService.onChange().subscribe(value=>{
+      this.tasks = [...value]
+    })
+  }
 
   ngOnInit(): void {
   }
 
-
-  remove(task: Task){
+  remove(task: Task) {
     this.taskService.removeTask(task)
   }
 }
